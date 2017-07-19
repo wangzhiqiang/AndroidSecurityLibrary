@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+            }
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    testCompile 'junit:junit:4.12'
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            pom.groupId = "cn.wangzq"
+            pom.artifactId = "security"
+            pom.version = '0.0.1-SNAPSHOT'
+
+            repository(url: "http://172.16.51.66:8081/nexus/content/repositories/releases/") {
+                authentication(userName: MAVEN_JJJR_NAME, password:MAVEN_JJJR_PASS)
+            }
+            snapshotRepository(url: "http://172.16.51.66:8081/nexus/content/repositories/snapshots/") {
+                authentication(userName: MAVEN_JJJR_NAME, password: MAVEN_JJJR_PASS)
+            }
+        }
+
+
+    }
+}
