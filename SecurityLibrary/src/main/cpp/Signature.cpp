@@ -15,7 +15,7 @@ char *Signature::hexdigest(unsigned char *digest, int len) {
     char buf[len * 2 + 1];
     for (int i = 0; i < len; i++)
         sprintf(buf + i * 2, "%02x", digest[i]);
-//    buf[len] = 0;
+    buf[len] = 0;
     return buf;
 }
 
@@ -73,7 +73,6 @@ void Signature::validate(JNIEnv *env) {
             break;
         }
     }
-    LOGI("签名: %s ", res);
     if (!isPass) {
         LOGW("签名校验不通过 %s ", res);
         kill(getpid(), SIGKILL);
