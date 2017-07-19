@@ -5,15 +5,11 @@
 #ifndef _FLOG_H
 #define _FLOG_H
 
-#include "jni.h"
 #include <android/log.h>
 
 static const char *TAG = "LOG_TAG";
 
 static  const bool  ENABLE_LOG= true;
-
-
-
 
 #define LOGD(fmt, args...) if(ENABLE_LOG) __android_log_print(ANDROID_LOG_DEBUG, TAG, fmt, ##args)
 #define LOGI(fmt, args...) if(ENABLE_LOG) __android_log_print(ANDROID_LOG_INFO,  TAG, fmt, ##args)

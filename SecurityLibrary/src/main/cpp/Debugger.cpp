@@ -14,8 +14,7 @@ void Debugger::validate(JNIEnv *env) {
 
     bool res = isDebuggerConnected(env);
     if (res) {
-        LOGE("DebuggerConnected ...");
-//        throw "调试中";
+        LOGW("调试链接中 ...");
         kill(getpid(),SIGKILL);
     }
     checkTracerPid();
@@ -29,8 +28,6 @@ bool Debugger::isDebuggerConnected(JNIEnv *env) {
     jmethodID method = env->GetStaticMethodID(clazz_debug, "isDebuggerConnected", "()Z");
     jboolean res = env->CallStaticBooleanMethod(clazz_debug, method);
     bool b = res == JNI_TRUE;
-    LOGW("isDebuggerConnected: %d ", res);
-
     return b;
 }
 

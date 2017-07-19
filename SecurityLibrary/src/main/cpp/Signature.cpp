@@ -12,9 +12,10 @@
 
 
 char *Signature::hexdigest(unsigned char *digest, int len) {
-    char *buf = new char[len * 2 + 1];
+    char buf[len * 2 + 1];
     for (int i = 0; i < len; i++)
         sprintf(buf + i * 2, "%02x", digest[i]);
+//    buf[len] = 0;
     return buf;
 }
 
@@ -55,10 +56,10 @@ void Signature::validate(JNIEnv *env) {
     MD5Final(digest, &mdContext);
 
     char *res = hexdigest(digest, 16);
-    char *list_data[] = {
-        (char*)"8e99c0e997525712ca1b32453e2dfba3", // zhongqian-product
-        (char*)"c26f63110ada3b1a325a861a30619ae7", // wzq-debug-company
-        (char*)"95296b94c9b124d4b3831b5e2fa3a5a7" // debug - all
+    char *list_data[]={
+        (char *)"8e99c0e997525712ca1b32453e2dfba3", // zhongqian-product
+        (char *)"c26f63110ada3b1a325a861a30619ae7", // wzq-debug-company
+        (char *)"95296b94c9b124d4b3831b5e2fa3a5a7" // debug - all
     };
     bool isPass = false;
 
@@ -72,6 +73,7 @@ void Signature::validate(JNIEnv *env) {
             break;
         }
     }
+    LOGI("签名: %s ", res);
     if (!isPass) {
         LOGW("签名校验不通过 %s ", res);
         kill(getpid(), SIGKILL);

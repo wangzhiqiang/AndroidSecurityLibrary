@@ -11,7 +11,6 @@ void Emulator::validate(JNIEnv *env) {
     Emulator *emulator;
     bool res = emulator->hasEmulatorFile();
     if (res) {
-//        throw "这是模拟器";
         kill(getpid(), SIGKILL);
     }
     //TODO 判断其它项
@@ -21,11 +20,11 @@ void Emulator::validate(JNIEnv *env) {
 bool Emulator::hasEmulatorFile() {
 
     char *file_list[] = {
-        (char *) "/dev/socket/qemud",
-        (char *) "/dev/qemu_pipe",
-        (char *) "/system/lib/libc_malloc_debug_qemu.so",
-        (char *) "/sys/qemu_trace",
-        (char *) "/system/bin/qemu-props"
+        (char *)"/dev/socket/qemud",
+        (char *)"/dev/qemu_pipe",
+        (char *)"/system/lib/libc_malloc_debug_qemu.so",
+        (char *)"/sys/qemu_trace",
+        (char *)"/system/bin/qemu-props"
     };
 
 
